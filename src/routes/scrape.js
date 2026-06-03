@@ -13,6 +13,8 @@ router.post("/scrape", auth, async (req, res) => {
     return res.status(400).json({ error: "`url` is required" });
   }
 
+  console.log(`Received scrape request for URL: ${url} with options:`, options);
+
   const jobId = uuidv4();
   const startedAt = new Date().toISOString();
 
@@ -20,6 +22,7 @@ router.post("/scrape", auth, async (req, res) => {
     // Drop in your scraping logic here
     const data = await run(url, options);
 
+    console.log(`[${jobId}] Scrape completed successfully.`);
     return res.json({
       jobId,
       status: "success",

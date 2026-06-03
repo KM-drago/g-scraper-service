@@ -16,7 +16,7 @@ import { createClient } from "./client.js";
  * @returns {Promise<Array|number>} - Returns an array of reviews or 0 if no reviews are found.
  * @throws {Error} - Throws an error if the URL is not provided or if fetching reviews fails.
  */
-export async function scraper(url, { sort_type = "relevant", search_query = "", pages = "max", clean = false, experimental = false, cookies = undefined } = {}) {
+export default async function scraper(url, { sort_type = "relevant", search_query = "", pages = "max", clean = false, experimental = false, cookies = undefined } = {}) {
   try {
     validateParams(url, sort_type, pages, clean);
     const sortValue = SortEnum[sort_type];
@@ -52,19 +52,5 @@ export async function scraper(url, { sort_type = "relevant", search_query = "", 
     return 0;
   }
 }
-
-const link = "https://www.google.com/maps/place//data=!4m4!3m3!1s0x808fba02425dad8f:0x6c296c66619367e0!9m1!1b1?g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNlEAIYASAA";
-
-const reviews = await scraper(link, {
-  sort_type: "relevant",
-  search_query: "",
-  pages: "25",
-  clean: true,
-  experimental: false,
-  cookies: { "__Secure-1PSID": "...", "__Secure-1PSIDTS": "..." },
-});
-
-console.log(reviews);
-console.log(reviews.length);
 
 export { rotateCookies as rotate } from "./rotate.js";
